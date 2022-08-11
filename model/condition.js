@@ -1,27 +1,19 @@
 import mongoose from "mongoose";
 import { userModel } from "./userModel.js";
 
-const dosageSchema = new mongoose.Schema(
+const conditionSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: userModel,
     },
-    name: {
+    yearStart: {
       type: String,
       required: true,
     },
-    dosage: {
-      type: Number,
-      required: true,
-    },
-    timesPerDay: {
-      type: Number,
-      required: true,
-    },
-    timesPerWeek: {
-      type: Number,
+    yearEnd: {
+      type: String,
       required: true,
     },
   },
@@ -30,4 +22,4 @@ const dosageSchema = new mongoose.Schema(
   }
 );
 
-export const dosageModel = mongoose.model("dosage", dosageSchema);
+export const conditionModel = mongoose.model("condition", conditionSchema);

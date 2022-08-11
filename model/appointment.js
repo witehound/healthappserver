@@ -1,27 +1,27 @@
 import mongoose from "mongoose";
 import { userModel } from "./userModel.js";
 
-const dosageSchema = new mongoose.Schema(
+const appointmentSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: userModel,
     },
-    name: {
+    date: {
       type: String,
       required: true,
     },
-    dosage: {
-      type: Number,
+    doctor: {
+      type: String,
       required: true,
     },
-    timesPerDay: {
-      type: Number,
+    hospital: {
+      type: String,
       required: true,
     },
-    timesPerWeek: {
-      type: Number,
+    time: {
+      type: String,
       required: true,
     },
   },
@@ -30,4 +30,7 @@ const dosageSchema = new mongoose.Schema(
   }
 );
 
-export const dosageModel = mongoose.model("dosage", dosageSchema);
+export const appointmentModel = mongoose.model(
+  "appointment",
+  appointmentSchema
+);

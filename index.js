@@ -1,0 +1,18 @@
+import "dotenv/config";
+import express from "express";
+import userRoutes from "./routes/userRoutes.js";
+import configDB from "./config/db.js";
+
+const app = express();
+configDB();
+const port = process.env.PORT || 8080;
+
+// MiddleWare
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+app.listen(port, () => {
+  console.log(`server live on port ${port}`);
+});
+
+app.use("/api/user", userRoutes);
