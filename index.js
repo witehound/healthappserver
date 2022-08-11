@@ -2,6 +2,8 @@ import "dotenv/config";
 import express from "express";
 import userRoutes from "./routes/userRoutes.js";
 import appointmentRoute from "./routes/appointmentRoute.js";
+import vitalRoute from "./routes/vitalRoutes.js";
+import dosageRoute from "./routes/dosageRoutes.js";
 
 import configDB from "./config/db.js";
 
@@ -19,3 +21,5 @@ app.listen(port, () => {
 
 app.use("/api/user", userRoutes);
 app.use("/api/appointment", appointmentRoute);
+app.use("/api/vital", vitalRoute);
+app.use("/api/dosage", dosageRoute);

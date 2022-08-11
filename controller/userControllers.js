@@ -1,7 +1,7 @@
 import { userModel } from "../model/userModel.js";
 import bcrypt from "bcrypt";
 import asyncHandler from "express-async-handler";
-// import { generateToken } from "../helper/jwt.js";
+import { generateToken } from "../helper/jwt.js";
 
 //@desc Fetch a user
 //@route Get /api/user
@@ -24,7 +24,6 @@ export const getUser = asyncHandler(async (req, res) => {
     firstName,
     lastName,
     email,
-    password,
     age,
     gender,
     address,
@@ -89,7 +88,7 @@ export const createUser = asyncHandler(async (req, res) => {
       age: newUser.age,
       gender: newUser.gender,
       address: newUser.address,
-      // token: generateToken(user.id),
+      token: generateToken(user.id),
     });
   } else {
     return res.status(400).json({ message: `Failed to create a new user.` });
@@ -101,9 +100,10 @@ export const createUser = asyncHandler(async (req, res) => {
 //@access Private
 export const updateUser = asyncHandler(async (req, res) => {
   const { id } = req.user;
+  console.log(id);
   let user = await userModel.findById(id);
-  if (user) {
-    return res.status(400).json({ message: `user already exist` });
+  if (!user) {
+    return res.status(400).json({ message: `user does not exist` });
   }
 
   //update user
@@ -119,8 +119,8 @@ export const updateUser = asyncHandler(async (req, res) => {
 export const deleteUser = asyncHandler(async (req, res) => {
   const { id } = req.user;
   let user = await userModel.findById(id);
-  if (user) {
-    return res.status(400).json({ message: `user already exist` });
+  if (!user) {
+    return res.status(400).json({ message: `user does not exist` });
   }
 
   //delet user
@@ -136,12 +136,12 @@ export const deleteUser = asyncHandler(async (req, res) => {
 export const loginUser = asyncHandler(async (req, res) => {
   const { password, email } = req.body;
   const newUser = await userModel.findOne({ email });
-  if (newUser) {
+  if (!newUser) {
     return res.status(400).json({ message: `Incorect Details.` });
   }
 
   //comapre password
-  const verifiedPassword = await bcrypt.compare(password, user.password);
+  const verifiedPassword = await bcrypt.compare(password, newUser.password);
   if (!verifiedPassword) {
     return res.status(400).json({ message: `Incorect Password.` });
   }
@@ -155,6 +155,6 @@ export const loginUser = asyncHandler(async (req, res) => {
     age: newUser.age,
     gender: newUser.gender,
     address: newUser.address,
-    // token: generateToken(user.id),
+    token: generateToken(newUser.id),
   });
 });

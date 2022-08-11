@@ -7,6 +7,7 @@ const vitalsSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: userModel,
+      unique: true,
     },
     blodPressure: {
       type: String,

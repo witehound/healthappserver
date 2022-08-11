@@ -7,23 +7,35 @@ import asyncHandler from "express-async-handler";
 //@access Private
 export const getAppointment = asyncHandler(async (req, res) => {
   //fetch all appointment
-  const Appointments = await new appointmentModel.find();
-  res.status(200).json({ Appointments });
+  const Appointments = await appointmentModel.find();
+  let userAppointment = [];
+  for (let app of Appointments) {
+    if (app.user == req.user.id) {
+      userAppointment.push(app);
+    }
+  }
+  res.status(200).json(userAppointment);
 });
 
 //@desc Create a appointment
 //@route Post /api/appointment
 //@access Private
 export const createAppointment = asyncHandler(async (req, res) => {
-  const { user, date, doctor, hospital, time } = req.body;
+  const { date, doctor, hospital, time } = req.body;
 
   //verify all feilds
-  if (!user || !date || !doctor || !hospital || time) {
+  if (!date || !doctor || !hospital || !time) {
     return res.status(400).json({ message: `add all fields` });
   }
 
   //save new appointment
-  const newAppointment = new appointmentModel(req.body);
+  const newAppointment = new appointmentModel({
+    date,
+    doctor,
+    hospital,
+    time,
+    user: req.user.id,
+  });
   await newAppointment.save();
   res.status(200).json({ newAppointment, message: `added new goal` });
 });
@@ -77,5 +89,5 @@ export const deleteAppointment = asyncHandler(async (req, res) => {
 
   //delete appointment
   await appointmentModel.findByIdAndDelete(appointmnet._id);
-  res.status(200).json({ message: `updated appointment` });
+  res.status(200).json({ message: `delted appointment` });
 });
