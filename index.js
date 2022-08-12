@@ -5,6 +5,7 @@ import appointmentRoute from "./routes/appointmentRoute.js";
 import vitalRoute from "./routes/vitalRoutes.js";
 import dosageRoute from "./routes/dosageRoutes.js";
 import conditionRoute from "./routes/conditionRoutes.js";
+import cors from "cors";
 
 import configDB from "./config/db.js";
 
@@ -13,6 +14,7 @@ configDB();
 const port = process.env.PORT || 8080;
 
 // MiddleWare
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
