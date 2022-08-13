@@ -21,7 +21,7 @@ export const getConditions = asyncHandler(async (req, res) => {
 //@route Post /api/condition
 //@access Private
 export const createCondition = asyncHandler(async (req, res) => {
-  const { yearStart, yearEnd, state } = req.body;
+  const { yearStart, yearEnd, state, name } = req.body;
 
   //verify all feilds
   if (!yearStart || !yearEnd || !state) {
@@ -33,6 +33,7 @@ export const createCondition = asyncHandler(async (req, res) => {
     yearStart,
     yearEnd,
     state,
+    name,
     user: req.user.id,
   });
   await newCondition.save();
