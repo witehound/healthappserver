@@ -88,6 +88,6 @@ export const deleteAppointment = asyncHandler(async (req, res) => {
   }
 
   //delete appointment
-  await conditionModel.findByIdAndDelete(appointmnet._id);
+  await conditionModel.findByIdAndDelete(condition._id);
   res.status(200).json({ message: `delted condition` });
 });
