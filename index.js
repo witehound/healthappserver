@@ -6,6 +6,7 @@ import vitalRoute from "./routes/vitalRoutes.js";
 import dosageRoute from "./routes/dosageRoutes.js";
 import conditionRoute from "./routes/conditionRoutes.js";
 import cors from "cors";
+import morgan from "morgan";
 
 import configDB from "./config/db.js";
 
@@ -18,6 +19,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+app.use(morgan("tiny"));
 app.listen(port, () => {
   console.log(`server live on port ${port}`);
 });
