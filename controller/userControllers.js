@@ -62,7 +62,7 @@ export const createUser = asyncHandler(async (req, res) => {
     return res.status(400).json({ message: `user already exist` });
   }
 
-  //hash password
+  //hash pasword
   const saltRound = 10;
   const hashedPassword = await bcrypt.hash(password, saltRound);
 
