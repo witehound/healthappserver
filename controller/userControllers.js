@@ -107,10 +107,10 @@ export const updateUser = asyncHandler(async (req, res) => {
   }
 
   //update user
-  await userModel.findByIdAndUpdate(id, req.body, {
+  const newuser = await userModel.findByIdAndUpdate(id, req.body, {
     new: true,
   });
-  res.status(200).json({ message: `updated profile` });
+  res.status(200).json({ newuser });
 });
 
 //@desc Delete a user
