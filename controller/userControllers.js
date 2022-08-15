@@ -28,6 +28,7 @@ export const getUser = asyncHandler(async (req, res) => {
     gender,
     address,
     userName,
+    token: generateToken(req.user.id),
   });
 });
 
@@ -110,7 +111,7 @@ export const updateUser = asyncHandler(async (req, res) => {
   const newuser = await userModel.findByIdAndUpdate(id, req.body, {
     new: true,
   });
-  res.status(200).json({ newuser });
+  res.status(200).json({ ...newuser, token: generateToken(req.user.id) });
 });
 
 //@desc Delete a user
