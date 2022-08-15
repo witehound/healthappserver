@@ -108,10 +108,21 @@ export const updateUser = asyncHandler(async (req, res) => {
   }
 
   //update user
-  const newuser = await userModel.findByIdAndUpdate(id, req.body, {
-    new: true,
+  const { firstName, lastName, email, age, gender, address, userName, _id } =
+    await userModel.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
+  res.status(200).json({
+    id: _id,
+    firstName,
+    lastName,
+    email,
+    age,
+    gender,
+    address,
+    userName,
+    token: generateToken(req.user.id),
   });
-  res.status(200).json({ ...newuser, token: generateToken(req.user.id) });
 });
 
 //@desc Delete a user
