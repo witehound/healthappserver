@@ -14,4 +14,3 @@ router.route("/:id").put(verify, updateDosage).delete(verify, deleteDosage);
 
 export default router;
 
-//done
